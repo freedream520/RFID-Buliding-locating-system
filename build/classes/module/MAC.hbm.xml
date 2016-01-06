@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="module.MAC" table="positionInfo" catalog="">
+		<id name="MACid" type="java.lang.String">
+			<column name="MACid" length="20"/>
+			<generator class="assigned"/>
+		</id>
+		<property name="posName" type="java.lang.String">
+			<column name="posName" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

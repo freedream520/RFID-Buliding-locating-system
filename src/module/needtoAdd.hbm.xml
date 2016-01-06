@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="module.needtoAdd" table="needtoAdd" catalog="">
+		<id name="id" type="java.lang.String">
+			<column name="id" length="20"/>
+			<generator class="assigned"/>
+		</id>
+		<property name="type" type="java.lang.String">
+			<column name="type" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

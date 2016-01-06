@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="module.RFID" table="employeeInfo" catalog="">
+		<id name="RFIDid" type="java.lang.String">
+			<column name="RFIDid" length="20"/>
+			<generator class="assigned"/>
+		</id>
+		<property name="empName" type="java.lang.String">
+			<column name="empName" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>
+

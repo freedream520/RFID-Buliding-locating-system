@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/mydb"></property> 
+		<property name="username" value="ben_29"></property>
+		<property name="password" value="1329"></property>
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>module/RFID.hbm.xml</value>
+				<value>module/Inandout.hbm.xml</value>
+				<value>module/MAC.hbm.xml</value>
+				<value>module/needtoAdd.hbm.xml</value>					
+			</list>
+		</property>
+	</bean>
+	<bean id="hibTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- HibernateTransactionManager -->
+	<bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="dao" class="module.DAOImpl">
+		<property name="hibTemplate">
+			<ref bean="hibTemplate" />
+		</property>
+	</bean>
+	<bean id="factory" class="module.DAOFactory" scope="singleton">
+		<property name="dao">
+			<ref bean="dao" />
+		</property>
+		<property name="txManager">
+			<ref bean="txManager" />
+		</property>
+	</bean>
+	<bean id="Action" class="control.Action" scope="prototype">
+		<property name="Factory">
+			<ref bean="factory"/>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+ </beans>

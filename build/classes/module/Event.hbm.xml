@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="module.Event" table="Event" catalog="">
+		<property name="empName" type="java.lang.String">
+			<column name="empName" length="20" not-null="true" />
+		</property>
+		<property name="Date_" type="java.lang.String">
+			<column name="Date_" length="20" not-null="true" />
+		</property>
+		<property name="Time_" type="java.lang.String">
+			<column name="Time_" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

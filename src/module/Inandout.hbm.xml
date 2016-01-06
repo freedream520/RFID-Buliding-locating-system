@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="module.Inandout" table="nowPos" catalog="">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="increment"/>
+		</id>
+		<property name="RFIDid" type="java.lang.String">
+			<column name="rfidid" length="20" not-null="true" />
+		</property>
+		<property name="MACid" type="java.lang.String">
+			<column name="macid" length="20" not-null="true" />
+		</property>
+		<property name="date" type="java.lang.String">
+			<column name="date_" length="20" not-null="true" />
+		</property>
+		<property name="time" type="java.lang.String">
+			<column name="time_" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>
