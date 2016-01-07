@@ -3,6 +3,7 @@ package module;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -30,6 +31,8 @@ public class DAOFactory{
 				if(dao.selectbyRFID(u.getRFIDid())){
 					if(dao.selectbyMAC(u.getMACid())){
 						dao.insert(u);
+						//update newest
+								
 						System.out.println(u.getRFIDid()+" "+u.getMACid()+" Inandout!!");						
 					}
 					else{

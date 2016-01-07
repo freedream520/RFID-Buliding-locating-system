@@ -12,10 +12,10 @@
 			<column name="macid" length="20" not-null="true" />
 		</property>
 		<property name="date" type="java.lang.String">
-			<column name="date_" length="20" not-null="true" />
+			<column name="d" length="20" not-null="true" />
 		</property>
 		<property name="time" type="java.lang.String">
-			<column name="time_" length="20" not-null="true" />
+			<column name="t" length="20" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

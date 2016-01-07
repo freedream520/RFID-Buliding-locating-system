@@ -10,20 +10,7 @@
 <body>
 <div align="center">
 	Welcome
-	<table border="1" style="width:235px" >
-	<td>empName</td>
-	<td>Date_</td>
-	<td>Time_</td>
-	<tr>
-	<c:forEach items="${event}" var="d">
-	<td>${d.empName }</td>
-	<td>${d.empName }</td>
-	<td>${d.empName }</td>
-	<tr>
-	</c:forEach>
-	<br>
-	</table>
-	<br>
+	
 	<table border="1" style="width:235px" >
 	<td>id</td>
 	<td>RFID</td>

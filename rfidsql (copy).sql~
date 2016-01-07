@@ -75,8 +75,6 @@ COMMENT = '现在位置';
 
 insert into employeeInfo values("1","1emp"),("2","2emp");
 insert into positionInfo values("1","1pos"),("2","2pos");
-create view Event as SELECT employeeInfo.RFIDid,employeeInfo.empName,positionInfo.MACid,positionInfo.posName,nowPos.d,nowPos.t  FROM employeeInfo,nowPos,positionInfo WHERE employeeInfo.RFIDid=nowPos.RFIDid and nowPos.MACid=positionInfo.Macid;
-
 
 CREATE VIEW Event AS
 SELECT employeeInfo.empName,nowPos.Date_,nowPos.Time_

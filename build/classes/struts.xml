@@ -11,5 +11,20 @@
 		<action name="ManualAction" class="control.Action" method="ManualAction">
 			<result name="Success">/welcome.jsp</result>
 		</action>
+		<action name="newestPos" class="control.Action" method="newestPos">
+			<result name="Success">newestPos.jsp</result>
+		</action>
+		<action name="Event" class="control.Action" method="Event">
+			<result name="Success">event.jsp</result>
+		</action>
+		<action name="selectbyemp" class="control.Action" method="selectbyemp">
+			<result name="Success">selectbyemp.jsp</result>
+		</action>
+		<action name="selectbypos" class="control.Action" method="selectbypos">
+			<result name="Success">selectbypos.jsp</result>
+		</action>
+		<action name="selectbydate" class="control.Action" method="selectbydate">
+			<result name="Success">selectbydate.jsp</result>
+		</action>
 	</package>
 </struts>
