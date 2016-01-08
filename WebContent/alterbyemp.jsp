@@ -11,24 +11,22 @@
 <div align="center">
 	<s:property value="#title"/>
 	<table border="1" style="width:330px;text-align:center"" >
-	<td>员工编号</td>
-	<td>姓名</td>
-	<td>位置</td>
-	<td>日期</td>
-	<td>时间</td>
+	<td>id</td>
+	<td>name</td>
+	<td></td>
 	<tr>
-	<c:forEach items="${all}" var="c">
+	<c:forEach items="${RFID}" var="c">
 	<td>${c.RFIDid }</td>
-	<td>${c.empName }</td>
-	<td>${c.posName }</td>
-	<td>${c.d }</td>
-	<td>${c.t }</td>
+	<form action="alterbyemp" method="get" >
+			<input type="hidden" value=${c.RFIDid } name="choiceEmp" style="color:black"/>
+			<td><input value=${c.empName } name="empName" style="color:black"/></td>				
+			<td><input type="submit" value="修改"  style="color:black"/></td>				
+	</form>	
 	<tr>
 	</c:forEach>
 	<br>
 	</table>
 	<br>
-<br>
 </div>
 </body>
 <footer>

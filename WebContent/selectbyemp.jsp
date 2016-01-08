@@ -22,12 +22,14 @@
 		<td>员工编号</td>
 		<td>姓名</td>
 		<td>位置</td>
+		<td>日期</td>
 		<td>时间</td>
 		<tr>
 		<c:forEach items="${all}" var="c">
 		<td>${c.RFIDid }</td>
 		<td>${c.empName }</td>
 		<td>${c.posName }</td>
+		<td>${c.d }</td>
 		<td>${c.t }</td>
 		<tr>
 		</c:forEach>

@@ -26,5 +26,14 @@
 		<action name="selectbydate" class="control.Action" method="selectbydate">
 			<result name="Success">selectbydate.jsp</result>
 		</action>
+		<action name="alterbyemp" class="control.Action" method="alterbyemp">
+			<result name="Success">alterbyemp.jsp</result>
+		</action>
+		<action name="alterbypos" class="control.Action" method="alterbypos">
+			<result name="Success">alterbypos.jsp</result>
+		</action>
+		<action name="needtoAdd" class="control.Action" method="needtoAdd">
+			<result name="Success">needtoAdd.jsp</result>
+		</action>
 	</package>
 </struts>

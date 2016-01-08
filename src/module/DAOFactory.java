@@ -66,4 +66,12 @@ public class DAOFactory{
 	public List<needtoAdd> selectAllneedtoAdd() {
 		return dao.selectAllneedtoAdd();
 	}
+
+	public void update(RFID u) {
+		dao.update(u);		
+	}
+
+	public void update(MAC u) {
+		dao.update(u);				
+	}
 }

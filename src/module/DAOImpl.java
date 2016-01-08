@@ -57,7 +57,7 @@ public class DAOImpl implements DAO{
 
 	@Override
 	public List<RFID> selectAllRFID() {
-		return (List<RFID>) hi.find("from RFID",new String[]{});	
+		return (List<RFID>) hi.find("from RFID",new String[]{});
 	}
 
 	@Override
@@ -82,5 +82,15 @@ public class DAOImpl implements DAO{
 			return true;	
 		else
 			return false;
+	}
+
+	@Override
+	public void update(RFID u) {
+		hi.update(u);		
+	}
+
+	@Override
+	public void update(MAC u) {
+		hi.update(u);				
 	}
 }
