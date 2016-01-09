@@ -30,21 +30,21 @@ public class DAOFactory{
 			public Object doInTransaction(TransactionStatus arg0) {
 				if(dao.selectbyRFID(u.getRFIDid())){
 					if(dao.selectbyMAC(u.getMACid())){
-						dao.insert(u);
-						//update newest
-								
-						System.out.println(u.getRFIDid()+" "+u.getMACid()+" Inandout!!");						
+						dao.insert(u);													
 					}
 					else{
 						if(!dao.selectfromneedtoAdd(u.getMACid()))
 							dao.insert(new needtoAdd(u.getMACid(),"MAC"));
-						System.out.println(u.getRFIDid()+"RFID exist!! "+u.getMACid()+" not ");
 					}
 				}
 				else
-					if(!dao.selectfromneedtoAdd(u.getRFIDid()))
+					if(!dao.selectfromneedtoAdd(u.getRFIDid())){
 						dao.insert(new needtoAdd(u.getRFIDid(),"RFID"));
-					//System.out.println(u.getRFIDid()+"RFID not exist!! "+u.getMACid()+" not ");
+						if(!dao.selectbyMAC(u.getMACid())){
+							if(!dao.selectfromneedtoAdd(u.getMACid()))
+								dao.insert(new needtoAdd(u.getMACid(),"MAC"));
+						}
+					}
 				return null;				
 			}
 		});

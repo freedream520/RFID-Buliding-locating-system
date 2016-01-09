@@ -73,26 +73,20 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '现在位置';
 
-insert into employeeInfo values("1","1emp"),("2","2emp");
-insert into positionInfo values("1","1pos"),("2","2pos");
-create view Event as SELECT employeeInfo.RFIDid,employeeInfo.empName,positionInfo.MACid,positionInfo.posName,nowPos.d,nowPos.t  FROM employeeInfo,nowPos,positionInfo WHERE employeeInfo.RFIDid=nowPos.RFIDid and nowPos.MACid=positionInfo.Macid;
-
-
-CREATE VIEW Event AS
-SELECT employeeInfo.empName,nowPos.Date_,nowPos.Time_
-FROM employeeInfo,nowPos
-WHERE employeeInfo.RFIDid=nowPos.RFIDid;
-
-SELECT @rownum:=@rownum+1 as id,employeeInfo.empName,nowPos.Date_,nowPos.Time_ FROM (select @rownum:=0) r,employeeInfo,nowPos WHERE employeeInfo.RFIDid=nowPos.RFIDid;
-
-<!-- 	<td>${c.empName }</td>
-	<td>${c.Date_ }</td>
-	<td>${c.Time_ }</td> -->
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+insert into employeeInfo values("1","A"),("2","B"),("3","C"),("4","D");
+insert into positionInfo values("1","1A"),("2","1B"),("3","1C");
+insert into positionInfo values("4","2A"),("5","2B"),("6","2C");
+insert into positionInfo values("7","3A"),("8","3B"),("9","3C");
+insert into positionInfo values("10","4A"),("11","4B"),("12","4C");
+insert into positionInfo values("13","5A"),("14","5B"),("15","5C");
+insert into positionInfo values("16","6A"),("17","6B"),("18","6C");
 
 CREATE USER ben_29@localhost IDENTIFIED BY '1329';
 GRANT ALL PRIVILEGES ON RFID.* TO ben_29@localhost;
 FLUSH PRIVILEGES;
+
+create view Event as SELECT employeeInfo.RFIDid,employeeInfo.empName,positionInfo.MACid,positionInfo.posName,nowPos.d,nowPos.t  FROM employeeInfo,nowPos,positionInfo WHERE employeeInfo.RFIDid=nowPos.RFIDid and nowPos.MACid=positionInfo.Macid;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

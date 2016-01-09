@@ -8,9 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-<div align="center">
-	Welcome
-	
+<div align="center">	
 	<table border="1" style="width:235px" >
 	<td>id</td>
 	<td>RFID</td>
@@ -70,7 +68,4 @@
 <br>
 </div>
 </body>
-<footer>
-<%@ include file ="footer.jsp" %>
-</footer>
 </html>

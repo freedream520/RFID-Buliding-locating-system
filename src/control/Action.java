@@ -1,5 +1,8 @@
 package control;
 
+import java.io.IOException;
+import com.google.gson.Gson;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +20,7 @@ import org.hibernate.Transaction;
 import org.hibernate.internal.SQLQueryImpl;
 import org.hibernate.transform.Transformers;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -37,6 +44,17 @@ public class Action extends ActionSupport {
 	private String choiceMAC;
 	private String empName;
 	private String posName;
+	private String android;
+	public String getAndroid() {
+		return android;
+	}
+
+	public void setAndroid(String android) {
+		this.android = android;
+	}
+
+	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 	
 	public String getEmpName() {
 		return empName;
@@ -134,80 +152,138 @@ public class Action extends ActionSupport {
 	}
 
 	public String Action() {
-		Date a = new Date(timestamp);
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-		if(RFIDid != null && MACid != null){
-			Inandout u = new Inandout(RFIDid, MACid, date.format(a), time.format(a));
-			Factory.Inandout(u);
-		}
-
-		List<Inandout> l = Factory.selectAll();
+		addEvent();
+		return "Success";
+	}
+	public String backStage(){
 		ActionContext ctxt = ActionContext.getContext();
+		List<Inandout> l = Factory.selectAll();
 		ctxt.put("all", l);
-
 		List<RFID> r = Factory.selectAllRFID();
 		ctxt.put("RFID", r);
-
 		List<MAC> m = Factory.selectAllMAC();
 		ctxt.put("MAC", m);
-
 		List<needtoAdd> n = Factory.selectAllneedtoAdd();
 		ctxt.put("needtoAdd", n);
-		return "Success";
-		/*
-		 * if(Factory.Inandout(u)){ //put List<Inandout> l=Factory.selectAll();
-		 * ActionContext ctxt=ActionContext.getContext(); ctxt.put("all", l);
-		 * return "Success"; } else{ this.addFieldError("name",
-		 * "wrong username or password!!"); return "Fail"; }
-		 */
+		return "Success";		
 	}
 
 	public String ManualAction() {
 		timestamp = System.currentTimeMillis();
-		System.out.println(timestamp);
-		Date a = new Date(timestamp);
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-		if(RFIDid != null && MACid != null){
-			Inandout u = new Inandout(RFIDid, MACid, date.format(a), time.format(a));
-			Factory.Inandout(u);
-		}
-		/*
-		 * List<Event> list= s.createSQLQuery(
-		 * "SELECT employeeInfo.RFIDid,employeeInfo.empName,positionInfo.MACid,"
-		 * +
-		 * "positionInfo.posName,nowPos.Date_,nowPos.Time_ FROM employeeInfo,nowPos,positionInfo "
-		 * +
-		 * "WHERE employeeInfo.RFIDid=nowPos.RFIDid and nowPos.MACid=positionInfo.Macid;"
-		 * )
-		 * .setResultTransformer(Transformers.aliasToBean(Event.class)).list();
-		 * // Event ee=list.get(10); //
-		 * System.out.println(ee.getEmpName()+ee.getDate_()+ee.getTime_());
-		 */ActionContext ctxt = ActionContext.getContext();
-
-		// ctxt.put("event", list);
-
-		List<Inandout> l = Factory.selectAll();
-		ctxt.put("all", l);
-
-		List<RFID> r = Factory.selectAllRFID();
-		ctxt.put("RFID", r);
-
-		List<MAC> m = Factory.selectAllMAC();
-		ctxt.put("MAC", m);
-
-		List<needtoAdd> n = Factory.selectAllneedtoAdd();
-		ctxt.put("needtoAdd", n);
+		addEvent();
 		return "Success";
+	}
+	public String index(){
+		timestamp=System.currentTimeMillis();
+		return newestPos();
 	}
 
 	public String newestPos() {// 最新位置（本日）
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("all", getNewestPos());
+		return "Success";
+	}
+	public String newestPosA() {// 最新位置（本日）
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getNewestPos()));
+		return "Success";
+	}
+	public String Event() {// 位置记录
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("all", getEvent());
+		return "Success";
+	}
+	public String EventA() {// 位置记录
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getEvent()));
+		return "Success";
+	}
+	public String selectbyemp() {// 员工查询
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("RFID", getEmp());
+		ctxt.put("all", getselectbyemp());
+		return "Success";
+	}
+	public String getEmpA() {// 员工查询
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getEmp()));
+		return "Success";
+	}
+	public String selectbyempA() {// 员工查询
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getselectbyemp()));
+		return "Success";
+	}
+	public String selectbypos() {// 位置查询
+		ActionContext ctxt = ActionContext.getContext();			
+		ctxt.put("MAC", getPos());			
+		ctxt.put("all", getselectbypos());
+		return "Success";
+	}
+	public String getPosA() {
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getPos()));
+		return "Success";
+	}
+	public String selectbyposA() {
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getselectbypos()));
+		return "Success";
+	}
+	public String selectbydate() {// 日期查询
+		ActionContext ctxt = ActionContext.getContext();		
+		ctxt.put("Date", getDate());			
+		ctxt.put("all", getselectbydate());
+		return "Success";
+	}
+	public String getDateA() {
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getDate()));
+		return "Success";
+	}
+	public String selectbydateA() {
+		ActionContext ctxt = ActionContext.getContext();
+		ctxt.put("json", new Gson().toJson(getselectbydate()));
+		return "Success";
+	}
+	public String alterbyemp() {// 人员信息修改
+		ActionContext ctxt = ActionContext.getContext();
+		getalterbyemp();
+		ctxt.put("RFID", getEmp());		
+		return "Success";
+	}
+	public String alterbyempA() {
+		ActionContext ctxt = ActionContext.getContext();
+		getalterbyemp();
+		ctxt.put("json", new Gson().toJson(getEmp()));
+		return "Success";
+	}
+	public String alterbypos() {// 位置信息修改
+		ActionContext ctxt = ActionContext.getContext();	
+		getalterbypos();
+		ctxt.put("MAC", getPos());		
+		return "Success";
+	}
+	public String alterbyposA() {// 位置信息修改
+		ActionContext ctxt = ActionContext.getContext();	
+		getalterbypos();
+		ctxt.put("json", new Gson().toJson(getPos()));
+		return "Success";
+	}
+	public String needtoAdd() {// 信息添加
+		ActionContext ctxt = ActionContext.getContext();
+		getneedtoAdd();
+		ctxt.put("needtoAdd", Factory.selectAllneedtoAdd());		
+		return "Success";
+	}
+	public String needtoAddA() {// 信息添加
+		ActionContext ctxt = ActionContext.getContext();
+		getneedtoAdd();
+		ctxt.put("needtoAdd", Factory.selectAllneedtoAdd());		
+		return "Success";
+	}
+	public List<Event> getNewestPos(){
 		Date a = new Date(timestamp);
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
-		System.out.println(timestamp + " " + System.currentTimeMillis());
-		System.out.println(date.format(a));
 		List<Event> lE = new ArrayList<Event>();
 		List list = s.createSQLQuery("select distinct RFIDid from nowPos where d=\'" + date.format(a) + "\'")
 				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -220,131 +296,78 @@ public class Action extends ActionSupport {
 					.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
 			lE.add(liste.get(0));
 		}
-		// for(Inandout i:lE)
-		// System.out.println(i.getRFIDid()+i.getMACid()+i.getTime()+i.getDate());
-		ActionContext ctxt = ActionContext.getContext();
-
-		String title = "最新位置 " + date.format(a);
-		ctxt.put("title", title);
-		ctxt.put("all", lE);
-		return "Success";
+		return lE;
 	}
-
-	public String Event() {// 位置记录
-		List<Event> liste = s.createSQLQuery("select * from Event order by d desc, t desc;")
+	public List<Event> getEvent(){
+		Date a = new Date(timestamp);
+		List<Event> lE = new ArrayList<Event>();
+		lE = s.createSQLQuery("select * from Event order by d desc, t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
-
-		ActionContext ctxt = ActionContext.getContext();
-
-		String title = "位置记录";
-		ctxt.put("title", title);
-		ctxt.put("all", liste);
-		return "Success";
+		return lE;
 	}
-	public String selectbyemp() {// 员工查询
-		ActionContext ctxt = ActionContext.getContext();
-
-		List<RFID> r = Factory.selectAllRFID();
-		ctxt.put("RFID", r);
-		String title = "查询员工";
-		ctxt.put("title", title);
-		System.out.println(choiceEmp);
+	public List<RFID> getEmp(){
+		return Factory.selectAllRFID();
+	}
+	public List<Event> getselectbyemp() {// 员工查询
 		List<Event> liste;
-		if(choiceEmp==null)
-			liste = s.createSQLQuery("select * from Event;")
+		if(choiceEmp==null||choiceEmp=="ALL"||choiceEmp.equals("ALL"))
+			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
 		else
-					liste = s.createSQLQuery("select * from Event where RFIDid="+choiceEmp+";")
+			liste = s.createSQLQuery("select * from Event where RFIDid='"+choiceEmp+"' order by d desc,t desc;")
 			.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
-			
-		ctxt.put("all", liste);
-		return "Success";
+		return liste;
 	}
-	public String selectbypos() {// 位置查询
-		ActionContext ctxt = ActionContext.getContext();
-
-		List<MAC> r = Factory.selectAllMAC();
-		ctxt.put("MAC", r);
-		String title = "查询位置";
-		ctxt.put("title", title);
-		System.out.println(choicePos);
+	public List<MAC> getPos(){
+		return Factory.selectAllMAC();
+	}
+	public List<Event> getselectbypos() {
 		List<Event> liste;
-		if(choicePos==null)
-			liste = s.createSQLQuery("select * from Event;")
+		if(choicePos==null ||choicePos=="ALL"||choicePos.equals("ALL"))
+			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
 		else
-			liste = s.createSQLQuery("select * from Event where MACid="+choicePos+";")
+			liste = s.createSQLQuery("select * from Event where MACid='"+choicePos+"' order by d desc,t desc;")
 			.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
-			
-		ctxt.put("all", liste);
-		return "Success";
+		return liste;
 	}
-	public String selectbydate() {// 日期查询
-		ActionContext ctxt = ActionContext.getContext();
-		String title = "查询员工";
-		ctxt.put("title", title);
-
-		List<Date> r = s.createSQLQuery("select distinct d from Event order by d desc;")
-				.setResultTransformer(Transformers.aliasToBean(Date_.class)).list();
-		ctxt.put("Date", r);
+	public List<Date_> getDate(){
+		return  s.createSQLQuery("select distinct d from Event order by d desc;")
+				.setResultTransformer(Transformers.aliasToBean(Date_.class)).list();			
+	}
+	public List<Event> getselectbydate() {
 		List<Event> liste;
-
-		System.out.println(choiceDate);
-		if(choiceDate==null)
-			liste = s.createSQLQuery("select * from Event;")
+		if(choiceDate==null ||choiceDate=="ALL"||choiceDate.equals("ALL"))
+			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
 		else
-			liste = s.createSQLQuery("select * from Event where d='" + choiceDate + "';")
-			.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
-			
-		ctxt.put("all", liste);
-		return "Success";
+			liste = s.createSQLQuery("select * from Event where d='" + choiceDate + "' order by d desc,t desc;")
+				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
+		return liste;
 	}
-	public String alterbyemp() {// 人员信息修改
-		ActionContext ctxt = ActionContext.getContext();
-		String title = "人员信息修改";
-		ctxt.put("title", title);
-
-		
-		System.out.println(choiceEmp);
+	public void getalterbyemp() {// 人员信息修改		
 		if(choiceEmp != null)
 			s.createSQLQuery("update employeeInfo set empName='"+empName+"' where RFIDid='" + choiceEmp + "';").executeUpdate();
-
-		List<RFID> r = Factory.selectAllRFID();
-		ctxt.put("RFID", r);
-		
-		return "Success";
 	}
-	public String alterbypos() {// 位置信息修改
-		ActionContext ctxt = ActionContext.getContext();
-		String title = "位置信息修改";
-		ctxt.put("title", title);
-		
-		System.out.println(choicePos);
+	public void getalterbypos() {// 	
 		if(choicePos != null)
 			s.createSQLQuery("update positionInfo set posName='"+posName+"' where MACid='" + choicePos + "';").executeUpdate();
-
-		List<MAC> r = Factory.selectAllMAC();
-		ctxt.put("MAC", r);
-		
-		return "Success";
 	}
-	public String needtoAdd() {// 信息添加
-		ActionContext ctxt = ActionContext.getContext();
-		String title = "信息添加";
-		ctxt.put("title", title);
-		
-		System.out.println(choicePos);
+	public void getneedtoAdd() {// 	
 		if(choiceEmp != null){
-			if(choicePos=="RFID")
+			if(choicePos=="RFID"||choicePos.equals("RFID"))
 				s.createSQLQuery("insert into employeeInfo values('"+choiceEmp+"','"+empName+"');").executeUpdate();
 			else
 				s.createSQLQuery("insert into positionInfo values('"+choiceEmp+"','"+empName+"');").executeUpdate();
 			s.createSQLQuery("delete from needtoAdd where id='"+choiceEmp+"';").executeUpdate();
 		}
-		List<needtoAdd> r = Factory.selectAllneedtoAdd();
-		ctxt.put("needtoAdd", r);
-		
-		return "Success";
+	}
+	public void addEvent(){
+		System.out.println(timestamp);
+		Date a = new Date(timestamp);
+		if(RFIDid != null && MACid != null){
+			Inandout u = new Inandout(RFIDid, MACid, date.format(a), time.format(a));
+			Factory.Inandout(u);
+		}
 	}
 }

@@ -5,35 +5,78 @@
 	
 <struts>
 	<package name="control" extends="struts-default">
+		<!-- 前端 -->
 		<action name="Action" class="control.Action" method="Action">
 			<result name="Success">/welcome.jsp</result>
 		</action>
-		<action name="ManualAction" class="control.Action" method="ManualAction">
-			<result name="Success">/welcome.jsp</result>
-		</action>
+		<!-- 实时位置 -->
 		<action name="newestPos" class="control.Action" method="newestPos">
 			<result name="Success">newestPos.jsp</result>
+		</action>		
+		<action name="newestPosA" class="control.Action" method="newestPosA">
+			<result name="Success">json.jsp</result>
 		</action>
+		<!-- 位置记录 -->
 		<action name="Event" class="control.Action" method="Event">
 			<result name="Success">event.jsp</result>
 		</action>
+		<action name="EventA" class="control.Action" method="EventA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<!-- 查询 -->
 		<action name="selectbyemp" class="control.Action" method="selectbyemp">
 			<result name="Success">selectbyemp.jsp</result>
+		</action>
+		<action name="selectbyempA" class="control.Action" method="selectbyempA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<action name="getEmpA" class="control.Action" method="getEmpA">
+			<result name="Success">json.jsp</result>
 		</action>
 		<action name="selectbypos" class="control.Action" method="selectbypos">
 			<result name="Success">selectbypos.jsp</result>
 		</action>
+		<action name="selectbyposA" class="control.Action" method="selectbyposA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<action name="getPosA" class="control.Action" method="getPosA">
+			<result name="Success">json.jsp</result>
+		</action>
 		<action name="selectbydate" class="control.Action" method="selectbydate">
 			<result name="Success">selectbydate.jsp</result>
 		</action>
+		<action name="selectbydateA" class="control.Action" method="selectbydateA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<action name="getDateA" class="control.Action" method="getDateA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<!-- 信息修改 -->
 		<action name="alterbyemp" class="control.Action" method="alterbyemp">
 			<result name="Success">alterbyemp.jsp</result>
+		</action>
+		<action name="alterbyempA" class="control.Action" method="alterbyempA">
+			<result name="Success">json.jsp</result>
 		</action>
 		<action name="alterbypos" class="control.Action" method="alterbypos">
 			<result name="Success">alterbypos.jsp</result>
 		</action>
+		<action name="alterbyposA" class="control.Action" method="alterbyposA">
+			<result name="Success">json.jsp</result>
+		</action>
+		<!-- 添加信息 -->
+		<action name="needtoAddA" class="control.Action" method="needtoAddA">
+			<result name="Success">json.jsp</result>
+		</action>
 		<action name="needtoAdd" class="control.Action" method="needtoAdd">
 			<result name="Success">needtoAdd.jsp</result>
+		</action>
+		<!-- BackStage -->
+		<action name="backStage" class="control.Action" method="backStage">
+			<result name="Success">welcome.jsp</result>
+		</action>
+		<action name="ManualAction" class="control.Action" method="ManualAction">
+			<result name="Success">ManualEvent.jsp</result>
 		</action>
 	</package>
 </struts>

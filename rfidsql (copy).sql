@@ -73,8 +73,13 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '现在位置';
 
-insert into employeeInfo values("1","1emp"),("2","2emp");
-insert into positionInfo values("1","1pos"),("2","2pos");
+insert into employeeInfo values("1","A"),("2","B"),("3","C"),("4","D");
+insert into positionInfo values("1","1A"),("2","1B"),("3","1C");
+insert into positionInfo values("4","2A"),("5","2B"),("6","2C");
+insert into positionInfo values("7","3A"),("8","3B"),("9","3C");
+insert into positionInfo values("10","4A"),("11","4B"),("12","4C");
+insert into positionInfo values("13","5A"),("14","5B"),("15","5C");
+insert into positionInfo values("16","6A"),("17","6B"),("18","6C");
 create view Event as SELECT employeeInfo.RFIDid,employeeInfo.empName,positionInfo.MACid,positionInfo.posName,nowPos.d,nowPos.t  FROM employeeInfo,nowPos,positionInfo WHERE employeeInfo.RFIDid=nowPos.RFIDid and nowPos.MACid=positionInfo.Macid;
 
 
