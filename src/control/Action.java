@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -147,8 +148,9 @@ public class Action extends ActionSupport {
 
 	public void setsessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-		s = sessionFactory.openSession();
-		s.setFlushMode(FlushMode.AUTO);
+
+		date.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		time.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 	}
 
 	public String Action() {
@@ -283,6 +285,7 @@ public class Action extends ActionSupport {
 		return "Success";
 	}
 	public List<Event> getNewestPos(){
+		s=sessionFactory.openSession();
 		Date a = new Date(timestamp);
 		List<Event> lE = new ArrayList<Event>();
 		List list = s.createSQLQuery("select distinct RFIDid from nowPos where d=\'" + date.format(a) + "\'")
@@ -296,19 +299,25 @@ public class Action extends ActionSupport {
 					.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
 			lE.add(liste.get(0));
 		}
+		if(s!=null)
+			s.close();
 		return lE;
 	}
 	public List<Event> getEvent(){
+		s=sessionFactory.openSession();
 		Date a = new Date(timestamp);
 		List<Event> lE = new ArrayList<Event>();
 		lE = s.createSQLQuery("select * from Event order by d desc, t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
+		if(s!=null)
+			s.close();
 		return lE;
 	}
 	public List<RFID> getEmp(){
 		return Factory.selectAllRFID();
 	}
 	public List<Event> getselectbyemp() {// 员工查询
+		s=sessionFactory.openSession();
 		List<Event> liste;
 		if(choiceEmp==null||choiceEmp=="ALL"||choiceEmp.equals("ALL"))
 			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
@@ -316,12 +325,15 @@ public class Action extends ActionSupport {
 		else
 			liste = s.createSQLQuery("select * from Event where RFIDid='"+choiceEmp+"' order by d desc,t desc;")
 			.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
+		if(s!=null)
+			s.close();
 		return liste;
 	}
 	public List<MAC> getPos(){
 		return Factory.selectAllMAC();
 	}
 	public List<Event> getselectbypos() {
+		s=sessionFactory.openSession();
 		List<Event> liste;
 		if(choicePos==null ||choicePos=="ALL"||choicePos.equals("ALL"))
 			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
@@ -329,13 +341,20 @@ public class Action extends ActionSupport {
 		else
 			liste = s.createSQLQuery("select * from Event where MACid='"+choicePos+"' order by d desc,t desc;")
 			.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
+		if(s!=null)
+			s.close();
 		return liste;
 	}
 	public List<Date_> getDate(){
-		return  s.createSQLQuery("select distinct d from Event order by d desc;")
-				.setResultTransformer(Transformers.aliasToBean(Date_.class)).list();			
+		s=sessionFactory.openSession();
+		List<Date_> l=s.createSQLQuery("select distinct d from Event order by d desc;")
+				.setResultTransformer(Transformers.aliasToBean(Date_.class)).list();
+		if(s!=null)
+			s.close();
+		return  l;			
 	}
 	public List<Event> getselectbydate() {
+		s=sessionFactory.openSession();
 		List<Event> liste;
 		if(choiceDate==null ||choiceDate=="ALL"||choiceDate.equals("ALL"))
 			liste = s.createSQLQuery("select * from Event order by d desc,t desc;")
@@ -343,17 +362,26 @@ public class Action extends ActionSupport {
 		else
 			liste = s.createSQLQuery("select * from Event where d='" + choiceDate + "' order by d desc,t desc;")
 				.setResultTransformer(Transformers.aliasToBean(Event.class)).list();
+		if(s!=null)
+			s.close();
 		return liste;
 	}
-	public void getalterbyemp() {// 人员信息修改		
+	public void getalterbyemp() {// 人员信息修改
+		s=sessionFactory.openSession();		
 		if(choiceEmp != null)
 			s.createSQLQuery("update employeeInfo set empName='"+empName+"' where RFIDid='" + choiceEmp + "';").executeUpdate();
+		if(s!=null)
+			s.close();
 	}
 	public void getalterbypos() {// 	
+		s=sessionFactory.openSession();
 		if(choicePos != null)
 			s.createSQLQuery("update positionInfo set posName='"+posName+"' where MACid='" + choicePos + "';").executeUpdate();
+		if(s!=null)
+			s.close();
 	}
 	public void getneedtoAdd() {// 	
+		s=sessionFactory.openSession();
 		if(choiceEmp != null){
 			if(choicePos=="RFID"||choicePos.equals("RFID"))
 				s.createSQLQuery("insert into employeeInfo values('"+choiceEmp+"','"+empName+"');").executeUpdate();
@@ -361,10 +389,13 @@ public class Action extends ActionSupport {
 				s.createSQLQuery("insert into positionInfo values('"+choiceEmp+"','"+empName+"');").executeUpdate();
 			s.createSQLQuery("delete from needtoAdd where id='"+choiceEmp+"';").executeUpdate();
 		}
+		if(s!=null)
+			s.close();
 	}
 	public void addEvent(){
 		System.out.println(timestamp);
 		Date a = new Date(timestamp);
+		
 		if(RFIDid != null && MACid != null){
 			Inandout u = new Inandout(RFIDid, MACid, date.format(a), time.format(a));
 			Factory.Inandout(u);
