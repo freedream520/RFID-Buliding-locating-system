@@ -18,11 +18,14 @@
 				<input type="text" placeholder="MACid" name="MACid"/>
 			</div>
 			<div class="password2">
-				<input type="submit" value="manual add"/>
+				<input type="submit" value="Manuak ADD"/>
 			</div>
 		</div>
 		<br/>
 	</form>
 </div>
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 </body>
 </html>

@@ -7,6 +7,4 @@
 	<s:property value="#json"/>
 </div>
 </body>
-<footer>
-</footer>
 </html>

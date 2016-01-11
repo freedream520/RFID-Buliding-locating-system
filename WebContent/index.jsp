@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="assets/css/admin.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
+
 <body>
 <!--[if lte IE 9]>
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
@@ -37,7 +38,7 @@
   </div>
 </header>
 
-<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="height:100%">
   <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -46,7 +47,7 @@
   <div class="admin-content">
 
     <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>实时位置</small></div>
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>后台简介</small></div>
     </div>
 
 
@@ -57,7 +58,7 @@
 	<td></td>
 	<tr>
 
-    <div class="am-g">
+    <div class="am-g" >
       <div class="am-u-sm-12">
 			<h4>RFID课程设计 WEB后台简介</h4>
 			
@@ -81,8 +82,7 @@
 </a>
 
 <footer>
-  <hr>
-  <p class="am-padding-left">© 2016 <a href="http://ben29.xyz">ben_29</a></p>
+<%@ include file="footer.jsp"%>
 </footer>
 
 <!--[if lt IE 9]>

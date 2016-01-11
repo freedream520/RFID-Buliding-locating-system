@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-	<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="height:100%">
 		  <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -93,6 +93,9 @@
 
 		</div>
 
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 		<a href="#" class="am-show-sm-only admin-menu"
 			data-am-offcanvas="{target: '#admin-offcanvas'}"> <span
 			class="am-icon-btn am-icon-th-list"></span>

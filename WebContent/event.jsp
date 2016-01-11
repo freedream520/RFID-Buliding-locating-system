@@ -37,7 +37,7 @@
   </div>
 </header>
 
-<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="height:100%">
     <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -86,9 +86,9 @@
   <span class="am-icon-btn am-icon-th-list"></span>
 </a>
 
+
 <footer>
-  <hr>
-  <p class="am-padding-left">© 2016 <a href="http://ben29.xyz">ben_29</a></p>
+<%@ include file="footer.jsp"%>
 </footer>
 
 <!--[if lt IE 9]>

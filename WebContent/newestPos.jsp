@@ -37,15 +37,15 @@
   </div>
 </header>
 
-<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="height:100%">
     <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
 
   <!-- content start -->
-  <div class="admin-content">
+  <div class="admin-content" >
 
-    <div class="am-cf am-padding">
+    <div class="am-cf am-padding" >
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>实时位置</small></div>
     </div>
 
@@ -86,9 +86,9 @@
   <span class="am-icon-btn am-icon-th-list"></span>
 </a>
 
+
 <footer>
-  <hr>
-  <p class="am-padding-left">© 2016 <a href="http://ben29.xyz">ben_29</a></p>
+<%@ include file="footer.jsp"%>
 </footer>
 
 <!--[if lt IE 9]>

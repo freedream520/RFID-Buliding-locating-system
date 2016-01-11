@@ -1,6 +1,7 @@
 /**
  * admin.css
  */
+html, body{ margin:0; height:100%; }
 
 ul {
   margin-top: 0;

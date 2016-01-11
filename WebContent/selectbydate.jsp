@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-	<div class="am-cf admin-main">
+<div class="am-cf admin-main" style="height:100%">
 		  <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -130,4 +130,7 @@
 		<script src="assets/js/amazeui.min.js"></script>
 		<script src="assets/js/app.js"></script>
 </body>
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 </html>
