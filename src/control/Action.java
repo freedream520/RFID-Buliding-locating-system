@@ -45,18 +45,19 @@ public class Action extends ActionSupport {
 	private String choiceMAC;
 	private String empName;
 	private String posName;
-	private String android;
-	public String getAndroid() {
-		return android;
-	}
-
-	public void setAndroid(String android) {
-		this.android = android;
-	}
+	private String operation;
 
 	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 	
+	public String getOperation() {
+		return operation;
+	}
+
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+
 	public String getEmpName() {
 		return empName;
 	}
@@ -368,15 +369,27 @@ public class Action extends ActionSupport {
 	}
 	public void getalterbyemp() {// 人员信息修改
 		s=sessionFactory.openSession();		
-		if(choiceEmp != null)
-			s.createSQLQuery("update employeeInfo set empName='"+empName+"' where RFIDid='" + choiceEmp + "';").executeUpdate();
+		if(choiceEmp != null){
+			if(operation=="alter"||operation.equals("alter"))
+				s.createSQLQuery("update employeeInfo set empName='"+empName+"' where RFIDid='" + choiceEmp + "';").executeUpdate();
+			else{//delete
+				s.createSQLQuery("delete from nowPos where RFIDid='" + choiceEmp + "';").executeUpdate();
+				s.createSQLQuery("delete from employeeInfo where RFIDid='" + choiceEmp + "';").executeUpdate();				
+			}				
+		}
 		if(s!=null)
 			s.close();
 	}
 	public void getalterbypos() {// 	
 		s=sessionFactory.openSession();
-		if(choicePos != null)
-			s.createSQLQuery("update positionInfo set posName='"+posName+"' where MACid='" + choicePos + "';").executeUpdate();
+		if(choicePos != null){
+			if(operation=="alter"||operation.equals("alter"))
+				s.createSQLQuery("update positionInfo set posName='"+posName+"' where MACid='" + choicePos + "';").executeUpdate();
+			else{//delete
+				s.createSQLQuery("delete from nowPos where MACid='" + choicePos + "';").executeUpdate();
+				s.createSQLQuery("delete from positionInfo where MACid='" + choicePos + "';").executeUpdate();				
+			}				
+		}
 		if(s!=null)
 			s.close();
 	}

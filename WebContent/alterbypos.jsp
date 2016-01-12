@@ -71,7 +71,7 @@
 									<tr>
 										<th>编号</th>
 										<th>位置</th>
-										<th>提交修改</th>
+										<th>&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -79,8 +79,9 @@
 									<td>${c.MACid }</td>
 									<form action="alterbypos" method="get" >
 											<input type="hidden" value=${c.MACid } name="choicePos"/>
-											<td><input value=${c.posName } name="posName" /></td>				
-											<td><button class="am-btn am-btn-default" type="submit">修改</button></td>	
+											<td><input value=${c.posName } name="posName" /></td>
+											<td><button class="am-btn am-btn-default" name="operation" value="alter" type="submit">修改</button>	
+											<button class="am-btn am-btn-default" name="operation" value="delete" type="submit" style="color:red">删除</button></td>	
 									</form>	
 									<tr>
 									</c:forEach>									

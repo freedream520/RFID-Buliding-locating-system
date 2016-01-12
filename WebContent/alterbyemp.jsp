@@ -71,7 +71,7 @@
 									<tr>
 										<th>编号</th>
 										<th>姓名</th>
-										<th>提交修改</th>
+										<th>&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160&#160操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,7 +80,8 @@
 									<form action="alterbyemp" method="get" >
 											<input type="hidden" value=${c.RFIDid } name="choiceEmp"/>
 											<td><input value=${c.empName } name="empName" /></td>				
-											<td><button class="am-btn am-btn-default" type="submit">修改</button></td>	
+											<td><button class="am-btn am-btn-default" name="operation" value="alter" type="submit">修改</button>	
+											<button class="am-btn am-btn-default" name="operation" value="delete" type="submit" style="color:red">删除</button></td>	
 									</form>	
 									<tr>
 									</c:forEach>									
