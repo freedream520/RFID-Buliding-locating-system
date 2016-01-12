@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-<div class="am-cf admin-main" style="height:100%">
+<div class="am-cf admin-main" >
 		  <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->

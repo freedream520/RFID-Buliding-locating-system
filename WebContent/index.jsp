@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="assets/css/admin.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
+<script>
+</script>
 
 <body>
 <!--[if lte IE 9]>
@@ -38,13 +40,13 @@
   </div>
 </header>
 
-<div class="am-cf admin-main" style="height:100%">
+<div class="am-cf admin-main" >
   <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
 
   <!-- content start -->
-  <div class="admin-content">
+  <div class="admin-content" >
 
     <div class="am-cf am-padding">
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>后台简介</small></div>
@@ -59,7 +61,7 @@
 	<tr>
 
     <div class="am-g" >
-      <div class="am-u-sm-12">
+      <div class="am-u-sm-12" id="p1">
 			<h4>RFID课程设计 WEB后台简介</h4>
 			
 			<ul><strong>实时位置：</strong>查看当前最新位置</ul>
@@ -81,9 +83,7 @@
   <span class="am-icon-btn am-icon-th-list"></span>
 </a>
 
-<footer>
-<%@ include file="footer.jsp"%>
-</footer>
+
 
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
@@ -97,4 +97,7 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 </html>

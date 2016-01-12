@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-<div class="am-cf admin-main" style="height:100%">
+<div class="am-cf admin-main" >
 		  <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -93,14 +93,13 @@
 
 		</div>
 
-<footer>
-<%@ include file="footer.jsp"%>
-</footer>
 		<a href="#" class="am-show-sm-only admin-menu"
 			data-am-offcanvas="{target: '#admin-offcanvas'}"> <span
 			class="am-icon-btn am-icon-th-list"></span>
 		</a>
-
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 		<!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>

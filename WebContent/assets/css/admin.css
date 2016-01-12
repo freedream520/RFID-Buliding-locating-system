@@ -23,7 +23,9 @@ ul {
 .admin-main {
   background: #f3f3f3;
 }
-
+footer {
+  background: #fff;
+}
 .admin-menu {
   position: fixed;
   z-index: 10;
@@ -70,7 +72,7 @@ ul {
 .admin-content {
   width: auto;
   overflow: hidden;
-  height: 100%;
+  min-height:684px;
   background: #fff;
 }
 

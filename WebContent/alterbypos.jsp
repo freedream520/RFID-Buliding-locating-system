@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-<div class="am-cf admin-main" style="height:100%">
+<div class="am-cf admin-main" >
 		  <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -92,10 +92,6 @@
 			<!-- content end -->
 
 		</div>
-
-<footer>
-<%@ include file="footer.jsp"%>
-</footer>
 		<a href="#" class="am-show-sm-only admin-menu"
 			data-am-offcanvas="{target: '#admin-offcanvas'}"> <span
 			class="am-icon-btn am-icon-th-list"></span>
@@ -113,4 +109,7 @@
 		<script src="assets/js/amazeui.min.js"></script>
 		<script src="assets/js/app.js"></script>
 </body>
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 </html>

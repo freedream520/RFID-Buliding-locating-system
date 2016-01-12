@@ -37,7 +37,7 @@
   </div>
 </header>
 
-<div class="am-cf admin-main" style="height:100%">
+<div class="am-cf admin-main" >
     <!-- sidebar start -->
 <%@ include file="head2.jsp"%>
   <!-- sidebar end -->
@@ -87,9 +87,7 @@
 </a>
 
 
-<footer>
-<%@ include file="footer.jsp"%>
-</footer>
+
 
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
@@ -103,4 +101,7 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
+<footer>
+<%@ include file="footer.jsp"%>
+</footer>
 </html>
